@@ -1,0 +1,31 @@
+name: Compile LaTeX to PDF
+
+# Запуск при push в ветку main и на pull request'ы в неё
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Клонирование репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Компиляция LaTeX (используется latexmk)
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: latex # <--- ваша папка
+          root_file: main.tex
+          latexmk_use_biber: true # <--- вместо отдельного запуска biber
+
+      # 3. Загрузка готового PDF как артефакта
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-document
+          path: main.pdf
