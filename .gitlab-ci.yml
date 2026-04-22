@@ -16,5 +16,5 @@ compile_pdf:
     - pdflatex main
   artifacts:
     paths:
-      - latex/main.pdf
+      - main.pdf
     expire_in: 7 days
