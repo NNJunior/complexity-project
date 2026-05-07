@@ -1,5 +1,6 @@
 latex/main.*
 textput.log
 __pycache__
+.pytest_cache
 
 !latex/main.tex

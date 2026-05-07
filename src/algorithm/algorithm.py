@@ -1,33 +1,4 @@
-Vertex = int
-Graph = dict[Vertex, set]
-
-def is_connected(graph: Graph, X: set):
-    visited = {v: False for v in X}
-
-    start = list(X)[0]
-
-    queue = [start]
-
-    while queue:
-        v = queue.pop(0)
-        visited[v] = True
-
-        for u in graph[v].intersection(X):
-            if visited[u]:
-                continue
-            queue.append(u)
-    
-    return all(visited.values())
-
-def is_cds(graph: Graph, X: set):
-    for v in graph:
-        if X.isdisjoint(graph[v]) and v not in X:
-            return False
-    
-    return is_connected(graph, X)
-
-def V(graph: Graph):
-    return set(range(len(graph)))
+from .base import *
 
 def free(graph: Graph, S: set, D: set):
     return V(graph).difference(set.union(*(graph[v] for v in S)))
@@ -57,7 +28,7 @@ def reduction(graph: Graph, S: set, D: set):
     
     def perform_b():
         for v in candidates(graph, S, D):
-            for u in candidates(graph, S, D):
+            for u in candidates(graph, S, D).difference({v}):
                 v_set = free(graph, S, D).intersection(graph[v])
                 u_set = free(graph, S, D).intersection(graph[u])
 
@@ -167,6 +138,7 @@ def run(graph: Graph, S: set, D: set):
     if not is_correct(graph, S, D):
         return None
     
+    
     reduction(graph, S, D)
     answers = recursion(graph, S, D)
 
@@ -182,6 +154,14 @@ def run(graph: Graph, S: set, D: set):
     return result
 
 def find_cds(graph: Graph):
+    if not is_connected(graph, V(graph)):
+        return None
+
+    for v in graph:
+        if is_cds(graph, {v}):
+            return {v}
+
+
     answers = []
 
     for i1 in V(graph):
