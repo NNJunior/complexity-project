@@ -1,4 +1,5 @@
-main.*
+latex/main.*
 textput.log
+__pycache__
 
-!main.tex
+!latex/main.tex
