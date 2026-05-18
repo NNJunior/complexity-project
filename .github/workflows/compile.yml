@@ -1,31 +1,34 @@
-name: Compile LaTeX to PDF
+name: Update Latest Release PDF
 
-# Запуск при push в ветку main и на pull request'ы в неё
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write               # Разрешить создание/обновление релиза
 
 jobs:
-  build:
+  update-release:
     runs-on: ubuntu-latest
     steps:
-      # 1. Клонирование репозитория
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Компиляция LaTeX (используется latexmk)
-      - name: Compile LaTeX document
+      - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          working_directory: latex # <--- ваша папка
+          working_directory: latex
           root_file: main.tex
-          latexmk_use_biber: true # <--- вместо отдельного запуска biber
+          args: "-pdf -halt-on-error -file-line-error -interaction=nonstopmode"
 
-      # 3. Загрузка готового PDF как артефакта
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+      - name: Update release with new PDF
+        uses: softprops/action-gh-release@v2
         with:
-          name: compiled-document
-          path: latex/main.pdf
+          tag_name: latest            # Релиз, привязанный к тегу latest
+          name: "Актуальный конспект"
+          draft: false
+          prerelease: false
+          files: latex/main.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
