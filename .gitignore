@@ -2,5 +2,7 @@ latex/main.*
 textput.log
 __pycache__
 .pytest_cache
+.venv
+tests_data
 
 !latex/main.tex

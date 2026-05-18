@@ -1,0 +1,6 @@
+networkx
+tqdm
+pytest-print
+numpy
+pandas
+matplotlib
