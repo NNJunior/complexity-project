@@ -1,5 +1,5 @@
 import algorithm
-from algorithm import base
+from algorithm import common
 
 def test_simple_1():
     graph = {
@@ -25,8 +25,8 @@ def test_simple_2():
     cds = algorithm.find_cds(graph)
     dummy_cds = algorithm.dummy_cds(graph)
 
-    assert base.is_cds(graph, cds)
-    assert base.is_cds(graph, dummy_cds)
+    assert common.is_cds(graph, cds)
+    assert common.is_cds(graph, dummy_cds)
     assert len(cds) == len(dummy_cds)
 
 def test_simple_3():
@@ -41,22 +41,6 @@ def test_simple_3():
     cds = algorithm.find_cds(graph)
     dummy_cds = algorithm.dummy_cds(graph)
 
-    assert base.is_cds(graph, cds)
-    assert base.is_cds(graph, dummy_cds)
+    assert common.is_cds(graph, cds)
+    assert common.is_cds(graph, dummy_cds)
     assert len(cds) == len(dummy_cds)
-
-def test_4_vertices():
-    pass
-
-def test_5_vertices():
-    pass
-
-def test_6_vertices():
-    pass
-
-def test_7_vertices():
-    pass
-
-def test_8_vertices():
-    pass
-
