@@ -1,4 +1,4 @@
-from .base import *
+from .common import *
 
 def dummy_cds(graph: Graph):
     if not is_connected(graph, V(graph)):

@@ -1,4 +1,4 @@
-from .base import *
+from .common import *
 
 def free(graph: Graph, S: set, D: set):
     return V(graph).difference(set.union(*(graph[v] for v in S)))
@@ -44,9 +44,7 @@ def reduction(graph: Graph, S: set, D: set):
                 return True
         return False
     
-    while perform_a(): ...
-    while perform_b(): ...
-    while perform_c(): ...
+    while perform_a() or perform_b() or perform_c(): ...
 
 def recursion(graph: Graph, S: set, D: set):
     S = S.copy()
@@ -132,14 +130,14 @@ def run(graph: Graph, S: set, D: set):
     S = S.copy()
     D = D.copy()
 
-    if is_cds(graph, S):
-        return S
-
     if not is_correct(graph, S, D):
         return None
     
-    
     reduction(graph, S, D)
+
+    if is_cds(graph, S):
+        return S
+
     answers = recursion(graph, S, D)
 
     if answers is None:
@@ -165,7 +163,7 @@ def find_cds(graph: Graph):
     answers = []
 
     for i1 in V(graph):
-        for i2 in range(i1 + 1, len(graph)):
+        for i2 in graph[i1]:
             answers.append(run(graph, {i1, i2}, set()))
 
     result = None
@@ -173,5 +171,4 @@ def find_cds(graph: Graph):
     for answ in answers:
         if (answ is not None) and (result is None or (len(answ) < len(result))):
             result = answ
-    
     return result

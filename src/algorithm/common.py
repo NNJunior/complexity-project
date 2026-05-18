@@ -24,6 +24,8 @@ def is_connected(graph: Graph, X: set):
     return all(visited.values())
 
 def is_cds(graph: Graph, X: set):
+    if X is None:
+        return False
     for v in graph:
         if X.isdisjoint(graph[v]) and v not in X:
             return False
