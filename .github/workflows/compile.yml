@@ -26,7 +26,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest            # Релиз, привязанный к тегу latest
-          name: "Актуальный конспект"
+          name: "Актуальный PDF"
           draft: false
           prerelease: false
           files: latex/main.pdf
